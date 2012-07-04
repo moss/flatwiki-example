@@ -16,6 +16,7 @@ public class EndToEndTest {
     private static final File INPUT_DIRECTORY = new File("test-input-dir");
     private static final File OUTPUT_DIRECTORY = new File("test-output-dir");
 
+    @Ignore // WIP
     @Test public void shouldGenerateAnHtmlPageForEveryWikiPage() throws IOException {
         givenInputFile("StoryZeroExample.wiki", "Some text in a file");
         whenITranslateTheInputFolderToHtml();
@@ -23,6 +24,7 @@ public class EndToEndTest {
     }
 
     // Story 1: It should turn WordsSmashedTogetherLikeSo into links
+    @Ignore
     @Test public void shouldTurn_WordsSmashedTogetherLikeSoInto_Links() throws IOException {
         givenInputFile("StoryOneExample.wiki", "Link to StoryOneExampleTarget");
         givenInputFile("StoryOneExampleTarget.wiki", "Here's the target of the link.");
@@ -32,6 +34,7 @@ public class EndToEndTest {
     }
 
     // Story 2: It should turn *starred* words into <b>boldface</b>
+    @Ignore
     @Test public void shouldTurnStarredWordsIntoBoldface() throws IOException {
         givenInputFile("StoryTwoExample.wiki", "Some *boldface* text");
         whenITranslateTheInputFolderToHtml();
@@ -39,6 +42,7 @@ public class EndToEndTest {
     }
 
     // Story 3: Double line breaks should act as paragraph separators
+    @Ignore
     @Test public void shouldTurnDoubleLineBreaksIntoParagraphBreaks() throws IOException {
         givenInputFile("StoryThreeExample.wiki", "Paragraph One\n\nParagraph Two");
         whenITranslateTheInputFolderToHtml();
@@ -46,7 +50,7 @@ public class EndToEndTest {
     }
 
     // Story 4: Links to nonexistent pages should format differently
-    @Ignore // WIP
+    @Ignore
     @Test public void shouldLinksToNonExistentPagesShouldNotFormatAsLinks() throws IOException {
         givenInputFile("StoryFourExample.wiki", "Link to NonexistentPage");
         whenITranslateTheInputFolderToHtml();
