@@ -16,7 +16,6 @@ public class EndToEndTest {
     private static final File INPUT_DIRECTORY = new File("test-input-dir");
     private static final File OUTPUT_DIRECTORY = new File("test-output-dir");
 
-    @Ignore // WIP
     @Test public void shouldGenerateAnHtmlPageForEveryWikiPage() throws IOException {
         givenInputFile("StoryZeroExample.wiki", "Some text in a file");
         whenITranslateTheInputFolderToHtml();
