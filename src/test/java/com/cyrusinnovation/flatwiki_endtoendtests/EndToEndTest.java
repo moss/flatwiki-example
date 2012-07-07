@@ -6,12 +6,14 @@ import org.hamcrest.Matcher;
 import org.junit.*;
 
 import java.io.*;
+import java.util.Calendar;
 
 import static org.apache.commons.io.FileUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.internal.matchers.StringContains.*;
 
+@SuppressWarnings({"ResultOfMethodCallIgnored", "MagicConstant"})
 public class EndToEndTest {
     private static final File INPUT_DIRECTORY = new File("test-input-dir");
     private static final File OUTPUT_DIRECTORY = new File("test-output-dir");
@@ -22,7 +24,6 @@ public class EndToEndTest {
         checkOutputFile("StoryZeroExample.html", containsString("Some text in a file"));
     }
 
-    // Story 1: It should turn WordsSmashedTogetherLikeSo into links
     @Ignore
     @Test public void shouldTurn_WordsSmashedTogetherLikeSoInto_Links() throws IOException {
         givenInputFile("StoryOneExample.wiki", "Link to StoryOneExampleTarget");
@@ -32,7 +33,6 @@ public class EndToEndTest {
                 containsString("<a href=\"StoryOneExampleTarget.html\">StoryOneExampleTarget</a>"));
     }
 
-    // Story 2: It should turn *starred* words into <b>boldface</b>
     @Ignore
     @Test public void shouldTurnStarredWordsIntoBoldface() throws IOException {
         givenInputFile("StoryTwoExample.wiki", "Some *boldface* text");
@@ -40,7 +40,6 @@ public class EndToEndTest {
         checkOutputFile("StoryTwoExample.html", containsString("<b>boldface</b>"));
     }
 
-    // Story 3: Double line breaks should act as paragraph separators
     @Ignore
     @Test public void shouldTurnDoubleLineBreaksIntoParagraphBreaks() throws IOException {
         givenInputFile("StoryThreeExample.wiki", "Paragraph One\n\nParagraph Two");
@@ -48,7 +47,17 @@ public class EndToEndTest {
         checkOutputFile("StoryThreeExample.html", containsString("Paragraph One<p>Paragraph Two"));
     }
 
-    // Story 4: Links to nonexistent pages should format differently
+
+    @Ignore
+    @Test public void shouldShowUpdatedDateAtTheEndOfEachPage() throws IOException {
+        givenInputFile("StoryFourExample.wiki", "Just some page. Whatever.");
+        fileLastModified("StoryFourExample.wiki", 2010, 3, 25, 16, 28);
+        whenITranslateTheInputFolderToHtml();
+        checkOutputFile("StoryFourExample.html", containsString(
+                "<i>Last Updated: 3/25/2010 4:28 PM</i>"
+        ));
+    }
+
     @Ignore
     @Test public void shouldLinksToNonExistentPagesShouldNotFormatAsLinks() throws IOException {
         givenInputFile("StoryFourExample.wiki", "Link to NonexistentPage");
@@ -58,9 +67,16 @@ public class EndToEndTest {
     }
 
     // vocabulary
-    public void givenInputFile(String filename, String content) throws IOException {
+    private void givenInputFile(String filename, String content) throws IOException {
         File path = new File(INPUT_DIRECTORY, filename);
         FileUtils.writeStringToFile(path, content);
+    }
+
+    private void fileLastModified(String filename,
+                                  int year, int month, int day, int hours, int minutes) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day, hours, minutes);
+        new File(INPUT_DIRECTORY, filename).setLastModified(calendar.getTimeInMillis());
     }
 
     private void whenITranslateTheInputFolderToHtml() throws IOException {
@@ -73,7 +89,6 @@ public class EndToEndTest {
         assertThat(output, matcher);
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before public void createInputDirectory() {
         if (!INPUT_DIRECTORY.exists()) INPUT_DIRECTORY.mkdir();
     }
