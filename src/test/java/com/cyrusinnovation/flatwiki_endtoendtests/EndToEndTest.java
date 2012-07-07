@@ -34,6 +34,16 @@ public class EndToEndTest {
     }
 
     @Ignore
+    @Test public void shouldShowUpdatedDateAtTheEndOfEachPage() throws IOException {
+        givenInputFile("StoryFourExample.wiki", "Just some page. Whatever.");
+        fileLastModified("StoryFourExample.wiki", 2010, 3, 25, 16, 28);
+        whenITranslateTheInputFolderToHtml();
+        checkOutputFile("StoryFourExample.html", containsString(
+                "<i>Last Updated: 3/25/2010 4:28 PM</i>"
+        ));
+    }
+
+    @Ignore
     @Test public void shouldTurnStarredWordsIntoBoldface() throws IOException {
         givenInputFile("StoryTwoExample.wiki", "Some *boldface* text");
         whenITranslateTheInputFolderToHtml();
@@ -45,17 +55,6 @@ public class EndToEndTest {
         givenInputFile("StoryThreeExample.wiki", "Paragraph One\n\nParagraph Two");
         whenITranslateTheInputFolderToHtml();
         checkOutputFile("StoryThreeExample.html", containsString("Paragraph One<p>Paragraph Two"));
-    }
-
-
-    @Ignore
-    @Test public void shouldShowUpdatedDateAtTheEndOfEachPage() throws IOException {
-        givenInputFile("StoryFourExample.wiki", "Just some page. Whatever.");
-        fileLastModified("StoryFourExample.wiki", 2010, 3, 25, 16, 28);
-        whenITranslateTheInputFolderToHtml();
-        checkOutputFile("StoryFourExample.html", containsString(
-                "<i>Last Updated: 3/25/2010 4:28 PM</i>"
-        ));
     }
 
     @Ignore
