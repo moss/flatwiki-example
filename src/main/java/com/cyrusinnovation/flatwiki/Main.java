@@ -3,7 +3,6 @@ package com.cyrusinnovation.flatwiki;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.util.*;
 
 public class Main {
     private final File inputDirectory;
@@ -21,15 +20,11 @@ public class Main {
     }
 
     private void run() throws IOException {
-        Map<String, String> files = new HashMap<String, String>();
         for (String filename : inputDirectory.list()) {
             if (!filename.endsWith(".wiki")) continue;
-            files.put(filename, FileUtils.readFileToString(new File(inputDirectory, filename)));
-        }
-        for (Map.Entry<String, String> nameToContent : files.entrySet()) {
-            String filename = nameToContent.getKey().replace(".wiki", ".html");
-            String content = nameToContent.getValue();
-            FileUtils.writeStringToFile(new File(outputDirectory, filename), content);
+            String content = FileUtils.readFileToString(new File(inputDirectory, filename));
+            String outputFilename = filename.replace(".wiki", ".html");
+            FileUtils.writeStringToFile(new File(outputDirectory, outputFilename), content);
         }
     }
 }
