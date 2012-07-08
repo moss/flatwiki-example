@@ -22,8 +22,9 @@ public class Main {
     private void run() throws IOException {
         for (String filename : inputDirectory.list()) {
             if (!filename.endsWith(".wiki")) continue;
+            String pageName = filename.replaceFirst("\\.wiki$", "");
             String content = FileUtils.readFileToString(new File(inputDirectory, filename));
-            String outputFilename = filename.replace(".wiki", ".html");
+            String outputFilename = pageName + ".html";
             FileUtils.writeStringToFile(new File(outputDirectory, outputFilename), content);
         }
     }
