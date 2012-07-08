@@ -24,8 +24,12 @@ public class Main {
             if (!filename.endsWith(".wiki")) continue;
             String pageName = filename.replaceFirst("\\.wiki$", "");
             String content = FileUtils.readFileToString(new File(inputDirectory, filename));
-            String outputFilename = pageName + ".html";
-            FileUtils.writeStringToFile(new File(outputDirectory, outputFilename), content);
+            writeFile(pageName + ".html", content);
         }
+    }
+
+    private void writeFile(String filename, String content) throws IOException {
+        File path = new File(outputDirectory, filename);
+        FileUtils.writeStringToFile(path, content);
     }
 }
