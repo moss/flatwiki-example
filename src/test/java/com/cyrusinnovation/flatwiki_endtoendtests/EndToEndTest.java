@@ -44,6 +44,18 @@ public class EndToEndTest {
     }
 
     @Ignore
+    @Test public void shouldShowARecentChangesPage() throws IOException {
+        givenFileCreatedOn("NewestPage.wiki", 2012, 5, 16);
+        givenFileCreatedOn("OldestPage.wiki", 1996, 1, 12);
+        givenFileCreatedOn("MiddlePage.wiki", 2008, 7, 25);
+        checkOutputFile("RecentChanges.html", containsString(
+                "<li><a href=\"NewestPage.html\">NewestPage</a>, created 5/16/2012</li>" +
+                        "<li><a href=\"MiddlePage.html\">MiddlePage</a>, created 7/25/2008</li>" +
+                        "<li><a href=\"OldestPage.html\">OldestPage</a>, created 1/12/1996</li>"
+        ));
+    }
+
+    @Ignore
     @Test public void shouldTurnStarredWordsIntoBoldface() throws IOException {
         givenInputFile("StoryTwoExample.wiki", "Some *boldface* text");
         whenITranslateTheInputFolderToHtml();
@@ -76,6 +88,11 @@ public class EndToEndTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day, hours, minutes);
         new File(INPUT_DIRECTORY, filename).setLastModified(calendar.getTimeInMillis());
+    }
+
+    private void givenFileCreatedOn(String name, int year, int month, int day) throws IOException {
+        givenInputFile(name, "Some text.");
+        fileLastModified(name, year, month, day, 5, 25);
     }
 
     private void whenITranslateTheInputFolderToHtml() throws IOException {
