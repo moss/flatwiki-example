@@ -24,7 +24,6 @@ public class EndToEndTest {
         checkOutputFile("StoryZeroExample.html", containsString("Some text in a file"));
     }
 
-    @Ignore
     @Test public void shouldTurn_WordsSmashedTogetherLikeSoInto_Links() throws IOException {
         givenInputFile("StoryOneExample.wiki", "Link to StoryOneExampleTarget");
         givenInputFile("StoryOneExampleTarget.wiki", "Here's the target of the link.");
