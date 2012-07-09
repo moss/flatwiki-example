@@ -23,9 +23,13 @@ public class Main {
         for (String filename : inputDirectory.list()) {
             if (!filename.endsWith(".wiki")) continue;
             String pageName = filename.replaceFirst("\\.wiki$", "");
-            String content = FileUtils.readFileToString(new File(inputDirectory, filename));
-            writeFile(pageName + ".html", content);
+            WikiPage page = new WikiPage(pageName, readInputFile(filename));
+            writeFile(page.getOutputFilename(), page.asHtml());
         }
+    }
+
+    private String readInputFile(String filename) throws IOException {
+        return FileUtils.readFileToString(new File(inputDirectory, filename));
     }
 
     private void writeFile(String filename, String content) throws IOException {
