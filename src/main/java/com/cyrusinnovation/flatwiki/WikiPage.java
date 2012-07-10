@@ -13,10 +13,6 @@ public class WikiPage {
     private final String source;
     private final long updatedTime;
 
-    public WikiPage(String name, String source) {
-        this(name, source, 0);
-    }
-
     public WikiPage(String name, String source, long updatedTime) {
         this.name = name;
         this.source = source;

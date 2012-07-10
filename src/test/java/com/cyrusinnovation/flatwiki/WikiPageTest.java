@@ -14,26 +14,26 @@ public class WikiPageTest {
     }
 
     @Test public void htmlContentIncludesTitleAndText() {
-        WikiPage page = new WikiPage("ThePageName", "Some random text.");
+        WikiPage page = new WikiPage("ThePageName", "Some random text.", 0);
         assertThat(page.asHtml(), containsString("<h1>ThePageName</h1>"));
         assertThat(page.asHtml(), containsString("Some random text."));
     }
 
     @Test public void transformsWordsSmashedTogetherIntoWikiLinks() {
-        WikiPage page = new WikiPage("PageName", "Link to AnotherPage.");
+        WikiPage page = new WikiPage("PageName", "Link to AnotherPage.", 0);
         assertThat(page.asHtml(), containsString(
                 "Link to <a href=\"AnotherPage.html\">AnotherPage</a>."
         ));
     }
 
     @Test public void wikiLinks_Cannot_AppearInTheMiddleOfOtherWords() {
-        WikiPage page = new WikiPage("PageName", "This should notBeLinked.");
+        WikiPage page = new WikiPage("PageName", "This should notBeLinked.", 0);
         assertThat(page.asHtml(), containsString("should notBeLinked."));
         assertThat(page.asHtml(), not(containsString("<a")));
     }
 
     @Test public void wikiLinks_Can_AppearAtTheStartOfTheContent() {
-        WikiPage page = new WikiPage("PageName", "ThisLink should be a link.");
+        WikiPage page = new WikiPage("PageName", "ThisLink should be a link.", 0);
         assertThat(page.asHtml(), containsString("<a href=\"ThisLink.html\">ThisLink</a>"));
     }
 
