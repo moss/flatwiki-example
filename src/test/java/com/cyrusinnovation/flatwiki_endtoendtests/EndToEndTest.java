@@ -6,8 +6,8 @@ import org.hamcrest.Matcher;
 import org.junit.*;
 
 import java.io.*;
-import java.util.Calendar;
 
+import static com.cyrusinnovation.flatwiki.TimeUtils.timeInMillis;
 import static org.apache.commons.io.FileUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -84,9 +84,8 @@ public class EndToEndTest {
 
     private void fileLastModified(String filename,
                                   int year, int month, int day, int hours, int minutes) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day, hours, minutes);
-        new File(INPUT_DIRECTORY, filename).setLastModified(calendar.getTimeInMillis());
+        long timeInMillis = timeInMillis(year, month, day, hours, minutes);
+        new File(INPUT_DIRECTORY, filename).setLastModified(timeInMillis);
     }
 
     private void givenFileCreatedOn(String name, int year, int month, int day) throws IOException {
