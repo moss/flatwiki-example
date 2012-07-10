@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.internal.matchers.StringContains.*;
 
-@SuppressWarnings({"ResultOfMethodCallIgnored", "MagicConstant"})
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class EndToEndTest {
     private static final File INPUT_DIRECTORY = new File("test-input-dir");
     private static final File OUTPUT_DIRECTORY = new File("test-output-dir");
