@@ -1,6 +1,7 @@
 package com.cyrusinnovation.flatwiki;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 
 import java.io.*;
 
@@ -20,8 +21,7 @@ public class Main {
     }
 
     private void run() throws IOException {
-        for (String filename : inputDirectory.list()) {
-            if (!filename.endsWith(".wiki")) continue;
+        for (String filename : listInputFiles()) {
             String pageName = filename.replaceFirst("\\.wiki$", "");
             WikiPage page = new WikiPage(pageName, readInputFile(filename));
             outputDirectory.writeFile(page.getOutputFilename(), page.asHtml());
@@ -29,6 +29,10 @@ public class Main {
     }
 
     // TODO extract a delegate for inputDirectory business?
+    private String[] listInputFiles() {
+        return inputDirectory.list(new SuffixFileFilter(".wiki"));
+    }
+
     private String readInputFile(String filename) throws IOException {
         return FileUtils.readFileToString(new File(inputDirectory, filename));
     }
