@@ -27,6 +27,7 @@ public class WikiPage {
     }
 
     private String wikifySource() {
+        // TODO extract a method object. WikiText? WikiScanner?
         StringBuffer result = new StringBuffer();
         Matcher matcher = WIKI_WORD_PATTERN.matcher(source);
         while (matcher.find()) {

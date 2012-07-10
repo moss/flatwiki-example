@@ -28,10 +28,12 @@ public class Main {
         }
     }
 
+    // TODO extract a delegate for inputDirectory business?
     private String readInputFile(String filename) throws IOException {
         return FileUtils.readFileToString(new File(inputDirectory, filename));
     }
 
+    // TODO introduce a parameter object for filename and content. Document?
     private void writeFile(String filename, String content) throws IOException {
         File path = new File(outputDirectory, filename);
         FileUtils.writeStringToFile(path, content);
