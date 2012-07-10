@@ -11,6 +11,7 @@ public class WikiPage {
     );
     private final String name;
     private final String source;
+    // TODO replace this with a value object. FormattableTime?
     private final long updatedTime;
 
     public WikiPage(String name, String source, long updatedTime) {
