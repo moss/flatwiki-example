@@ -7,6 +7,7 @@ import org.junit.*;
 
 import java.io.*;
 
+import static com.cyrusinnovation.flatwiki.EmptyArrayMatcher.isEmptyArray;
 import static com.cyrusinnovation.flatwiki.TimeUtils.timeInMillis;
 import static org.apache.commons.io.FileUtils.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -22,6 +23,12 @@ public class EndToEndTest {
         givenInputFile("StoryZeroExample.wiki", "Some text in a file");
         whenITranslateTheInputFolderToHtml();
         checkOutputFile("StoryZeroExample.html", containsString("Some text in a file"));
+    }
+
+    @Test public void shouldOnlyProcessSourceFilesWithTheDotWikiExtension() throws IOException {
+        givenInputFile("StoryOneExample.txt", "Some text in a file.");
+        whenITranslateTheInputFolderToHtml();
+        outputDirectoryShouldBeEmpty();
     }
 
     @Test public void shouldTurn_WordsSmashedTogetherLikeSoInto_Links() throws IOException {
@@ -102,8 +109,13 @@ public class EndToEndTest {
         assertThat(output, matcher);
     }
 
+    private void outputDirectoryShouldBeEmpty() {
+        assertThat("Output directory should be empty.", OUTPUT_DIRECTORY.list(), isEmptyArray());
+    }
+
     @Before public void createInputDirectory() {
         if (!INPUT_DIRECTORY.exists()) INPUT_DIRECTORY.mkdir();
+        if (!OUTPUT_DIRECTORY.exists()) OUTPUT_DIRECTORY.mkdir();
     }
 
     @After public void cleanUpResultsForRenderingInputFolder() throws IOException {
