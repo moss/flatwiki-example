@@ -23,7 +23,7 @@ public class Main {
     private void run() throws IOException {
         for (String filename : listInputFiles()) {
             String pageName = filename.replaceFirst("\\.wiki$", "");
-            WikiPage page = new WikiPage(pageName, readInputFile(filename));
+            WikiPage page = new WikiPage(pageName, readInputFile(filename), modifiedTime(filename));
             outputDirectory.writeFile(page.getOutputFilename(), page.asHtml());
         }
     }
@@ -33,7 +33,15 @@ public class Main {
         return inputDirectory.list(new SuffixFileFilter(".wiki"));
     }
 
+    private long modifiedTime(String filename) {
+        return inputFile(filename).lastModified();
+    }
+
     private String readInputFile(String filename) throws IOException {
-        return FileUtils.readFileToString(new File(inputDirectory, filename));
+        return FileUtils.readFileToString(inputFile(filename));
+    }
+
+    private File inputFile(String filename) {
+        return new File(inputDirectory, filename);
     }
 }

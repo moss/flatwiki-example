@@ -32,7 +32,6 @@ public class EndToEndTest {
                 containsString("<a href=\"StoryOneExampleTarget.html\">StoryOneExampleTarget</a>"));
     }
 
-    @Ignore
     @Test public void shouldShowUpdatedDateAtTheEndOfEachPage() throws IOException {
         givenInputFile("StoryFourExample.wiki", "Just some page. Whatever.");
         fileLastModified("StoryFourExample.wiki", 2010, 3, 25, 16, 28);
