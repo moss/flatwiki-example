@@ -31,19 +31,19 @@ public class EndToEndTest {
         outputDirectoryShouldBeEmpty();
     }
 
-    @Test public void shouldTurn_WordsSmashedTogetherLikeSoInto_Links() throws IOException {
-        givenInputFile("StoryOneExample.wiki", "Link to StoryOneExampleTarget");
-        givenInputFile("StoryOneExampleTarget.wiki", "Here's the target of the link.");
+    @Test public void shouldTurn_WordsSmashedTogetherLikeSo_IntoLinks() throws IOException {
+        givenInputFile("StoryTwoExample.wiki", "Link to StoryTwoExampleTarget");
+        givenInputFile("StoryTwoExampleTarget.wiki", "Here's the target of the link.");
         whenITranslateTheInputFolderToHtml();
-        checkOutputFile("StoryOneExample.html",
-                containsString("<a href=\"StoryOneExampleTarget.html\">StoryOneExampleTarget</a>"));
+        checkOutputFile("StoryTwoExample.html",
+                containsString("<a href=\"StoryTwoExampleTarget.html\">StoryTwoExampleTarget</a>"));
     }
 
     @Test public void shouldShowUpdatedDateAtTheEndOfEachPage() throws IOException {
-        givenInputFile("StoryFourExample.wiki", "Just some page. Whatever.");
-        fileLastModified("StoryFourExample.wiki", 2010, 3, 25, 16, 28);
+        givenInputFile("StoryThreeExample.wiki", "Just some page. Whatever.");
+        fileLastModified("StoryThreeExample.wiki", 2010, 3, 25, 16, 28);
         whenITranslateTheInputFolderToHtml();
-        checkOutputFile("StoryFourExample.html", containsString(
+        checkOutputFile("StoryThreeExample.html", containsString(
                 "<i>Last Updated: 3/25/2010 4:28 PM</i>"
         ));
     }
@@ -62,24 +62,24 @@ public class EndToEndTest {
 
     @Ignore
     @Test public void shouldTurnStarredWordsIntoBoldface() throws IOException {
-        givenInputFile("StoryTwoExample.wiki", "Some *boldface* text");
+        givenInputFile("StoryFiveExample.wiki", "Some *boldface* text");
         whenITranslateTheInputFolderToHtml();
-        checkOutputFile("StoryTwoExample.html", containsString("<b>boldface</b>"));
+        checkOutputFile("StoryFiveExample.html", containsString("<b>boldface</b>"));
     }
 
     @Ignore
     @Test public void shouldTurnDoubleLineBreaksIntoParagraphBreaks() throws IOException {
-        givenInputFile("StoryThreeExample.wiki", "Paragraph One\n\nParagraph Two");
+        givenInputFile("StorySixExample.wiki", "Paragraph One\n\nParagraph Two");
         whenITranslateTheInputFolderToHtml();
-        checkOutputFile("StoryThreeExample.html", containsString("Paragraph One<p>Paragraph Two"));
+        checkOutputFile("StorySixExample.html", containsString("Paragraph One<p>Paragraph Two"));
     }
 
     @Ignore
-    @Test public void shouldLinksToNonExistentPagesShouldNotFormatAsLinks() throws IOException {
-        givenInputFile("StoryFourExample.wiki", "Link to NonexistentPage");
+    @Test public void linksToNonExistentPagesShouldNotFormatAsLinks() throws IOException {
+        givenInputFile("StorySevenExample.wiki", "Link to NonexistentPage");
         whenITranslateTheInputFolderToHtml();
-        checkOutputFile("StoryFourExample.html", not(containsString("<a")));
-        checkOutputFile("StoryFourExample.html", containsString("Link to NonexistentPage"));
+        checkOutputFile("StorySevenExample.html", not(containsString("<a")));
+        checkOutputFile("StorySevenExample.html", containsString("Link to NonexistentPage"));
     }
 
     // vocabulary
