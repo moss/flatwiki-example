@@ -1,0 +1,62 @@
+<project name="flatwiki" default="build">
+    <property name="build.dir" location="build" />
+    <property name="src.dir" location="src/main/java" />
+    <property name="test.dir" location="src/test/java"/>
+    <property name="lib.dir" value="lib" />
+    <property name="app.classes.dir" location="${build.dir}/classes/app" />
+    <property name="test.classes.dir" location="${build.dir}/classes/test" />
+    
+    <path id="lib.path">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <path id="test.lib.path">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <path location="${app.classes.dir}" />
+    </path>
+
+    <target name="clean">
+    	<delete dir="${build.dir}" quiet="true" />
+    </target>
+    
+    <target name="app.compile">
+        <property name="app.src.dir" location="${src.dir}" />
+    	<mkdir dir="${app.classes.dir}" />
+        <javac destdir="${app.classes.dir}"
+               srcdir="${app.src.dir}"
+               classpathref="lib.path" 
+               includeantruntime="false"
+        	   debug="on"/>
+    </target>
+
+    <target name="test.compile"
+        	depends="app.compile">
+    	<mkdir dir="${test.classes.dir}" />
+        <javac destdir="${test.classes.dir}"
+               srcdir="${test.dir}"
+               classpathref="test.lib.path"
+               includeantruntime="false"
+               debug="on"/>
+    </target>
+    
+    <target name="test.run"
+    		description="Run the tests" 
+    		depends="test.compile" >
+        <property name="test.reports.dir" location="${build.dir}/testreports"/>
+        <mkdir dir="${test.reports.dir}"/>
+        <junit>
+            <batchtest todir="${test.reports.dir}" haltonfailure="true" haltonerror="true">
+                <formatter type="plain" usefile="false"/>
+                <fileset dir="${test.dir}" includes="**/*Test.java" />
+            </batchtest>
+            <classpath>
+                <path refid="test.lib.path" />
+                <path location="${test.classes.dir}" />
+            </classpath>
+        </junit>
+    </target>
+    
+    <target name="build"
+    	description="Clean, build, and full test" 
+   		depends="clean, test.run" />
+</project>
