@@ -13,7 +13,7 @@ namespace FlatWiki
 		}
 
 		// TODO introduce a parameter object for filename and content. Document?
-		public void writeFile(String filename, String content)
+		public void WriteFile(String filename, String content)
 		{
 			var path = outputDirectory + "\\" + filename;
 			File.WriteAllText(path, content);

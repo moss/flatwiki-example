@@ -8,52 +8,52 @@ namespace FlatWiki.Tests.EndToEnd
 	[TestClass]
 	public class EndToEndTest
 	{
-		private const string INPUT_DIRECTORY = "test-input-dir";
-		private const string OUTPUT_DIRECTORY = "test-output-dir";
+		private const string InputDirectory = "test-input-dir";
+		private const string OutputDirectory = "test-output-dir";
 
 		[TestMethod]
-		public void shouldGenerateAnHtmlPageForEveryWikiPage()
+		public void ShouldGenerateAnHtmlPageForEveryWikiPage()
 		{
-			givenInputFile("StoryZeroExample.wiki", "Some text in a file");
-			whenITranslateTheInputFolderToHtml();
-			checkOutputFile("StoryZeroExample.html", "Some text in a file");
+			GivenInputFile("StoryZeroExample.wiki", "Some text in a file");
+			WhenITranslateTheInputFolderToHtml();
+			CheckOutputFile("StoryZeroExample.html", "Some text in a file");
 		}
 
 		[TestMethod]
-		public void shouldOnlyProcessSourceFilesWithTheDotWikiExtension()
+		public void ShouldOnlyProcessSourceFilesWithTheDotWikiExtension()
 		{
-			givenInputFile("StoryOneExample.txt", "Some text in a file.");
-			whenITranslateTheInputFolderToHtml();
-			outputDirectoryShouldBeEmpty();
+			GivenInputFile("StoryOneExample.txt", "Some text in a file.");
+			WhenITranslateTheInputFolderToHtml();
+			OutputDirectoryShouldBeEmpty();
 		}
 
 		[TestMethod]
-		public void shouldTurn_WordsSmashedTogetherLikeSo_IntoLinks()
+		public void ShouldTurnWordsSmashedTogetherLikeSoIntoLinks()
 		{
-			givenInputFile("StoryTwoExample.wiki", "Link to StoryTwoExampleTarget");
-			givenInputFile("StoryTwoExampleTarget.wiki", "Here's the target of the link.");
-			whenITranslateTheInputFolderToHtml();
-			checkOutputFile("StoryTwoExample.html",
+			GivenInputFile("StoryTwoExample.wiki", "Link to StoryTwoExampleTarget");
+			GivenInputFile("StoryTwoExampleTarget.wiki", "Here's the target of the link.");
+			WhenITranslateTheInputFolderToHtml();
+			CheckOutputFile("StoryTwoExample.html",
 			                "<a href=\"StoryTwoExampleTarget.html\">StoryTwoExampleTarget</a>");
 		}
 
 		[TestMethod]
-		public void shouldShowUpdatedDateAtTheEndOfEachPage()
+		public void ShouldShowUpdatedDateAtTheEndOfEachPage()
 		{
-			givenInputFile("StoryThreeExample.wiki", "Just some page. Whatever.");
+			GivenInputFile("StoryThreeExample.wiki", "Just some page. Whatever.");
 			fileLastModified("StoryThreeExample.wiki", 2010, 3, 25, 16, 28);
-			whenITranslateTheInputFolderToHtml();
-			checkOutputFile("StoryThreeExample.html", "<i>Last Updated: 3/25/2010 4:28 PM</i>"
+			WhenITranslateTheInputFolderToHtml();
+			CheckOutputFile("StoryThreeExample.html", "<i>Last Updated: 3/25/2010 4:28 PM</i>"
 				);
 		}
 
 //    [TestMethod] -- Future requirement.
-		public void shouldShowARecentChangesPage()
+		public void ShouldShowARecentChangesPage()
 		{
-			givenFileCreatedOn("NewestPage.wiki", 2012, 5, 16);
-			givenFileCreatedOn("OldestPage.wiki", 1996, 1, 12);
-			givenFileCreatedOn("MiddlePage.wiki", 2008, 7, 25);
-			checkOutputFile("RecentChanges.html",
+			GivenFileCreatedOn("NewestPage.wiki", 2012, 5, 16);
+			GivenFileCreatedOn("OldestPage.wiki", 1996, 1, 12);
+			GivenFileCreatedOn("MiddlePage.wiki", 2008, 7, 25);
+			CheckOutputFile("RecentChanges.html",
 			                "<li><a href=\"NewestPage.html\">NewestPage</a>, created 5/16/2012</li>" +
 			                "<li><a href=\"MiddlePage.html\">MiddlePage</a>, created 7/25/2008</li>" +
 			                "<li><a href=\"OldestPage.html\">OldestPage</a>, created 1/12/1996</li>"
@@ -61,22 +61,22 @@ namespace FlatWiki.Tests.EndToEnd
 		}
 
 //    [TestMethod] -- Future requirement.
-		public void shouldTurnStarredWordsIntoBoldface()
+		public void ShouldTurnStarredWordsIntoBoldface()
 		{
-			givenInputFile("StoryFiveExample.wiki", "Some *boldface* text");
-			whenITranslateTheInputFolderToHtml();
-			checkOutputFile("StoryFiveExample.html", "<b>boldface</b>");
+			GivenInputFile("StoryFiveExample.wiki", "Some *boldface* text");
+			WhenITranslateTheInputFolderToHtml();
+			CheckOutputFile("StoryFiveExample.html", "<b>boldface</b>");
 		}
 
 //    [TestMethod] -- Future requirement.
-		public void shouldTurnDoubleLineBreaksIntoParagraphBreaks()
+		public void ShouldTurnDoubleLineBreaksIntoParagraphBreaks()
 		{
-			givenInputFile("StorySixExample.wiki", "Paragraph One\n\nParagraph Two");
-			whenITranslateTheInputFolderToHtml();
-			checkOutputFile("StorySixExample.html", "Paragraph One<p>Paragraph Two");
+			GivenInputFile("StorySixExample.wiki", "Paragraph One\n\nParagraph Two");
+			WhenITranslateTheInputFolderToHtml();
+			CheckOutputFile("StorySixExample.html", "Paragraph One<p>Paragraph Two");
 		}
 
-		private void givenInputFile(string filename, string content)
+		private void GivenInputFile(string filename, string content)
 		{
 			var path = GetInputFile(filename);
 			
@@ -86,7 +86,7 @@ namespace FlatWiki.Tests.EndToEnd
 
 		private static string GetInputFile(string filename)
 		{
-			return INPUT_DIRECTORY + "\\" + filename;
+			return InputDirectory + "\\" + filename;
 		}
 
 		private void fileLastModified(string filename,
@@ -96,52 +96,52 @@ namespace FlatWiki.Tests.EndToEnd
 			File.SetLastWriteTime(GetInputFile(filename), time);
 		}
 
-		private void givenFileCreatedOn(string name, int year, int month, int day)
+		private void GivenFileCreatedOn(string name, int year, int month, int day)
 		{
-			givenInputFile(name, "Some text.");
+			GivenInputFile(name, "Some text.");
 			fileLastModified(name, year, month, day, 5, 25);
 		}
 
-		private void whenITranslateTheInputFolderToHtml()
+		private void WhenITranslateTheInputFolderToHtml()
 		{
-			Main.main(INPUT_DIRECTORY, OUTPUT_DIRECTORY);		}
+			FlatWiki.Main(InputDirectory, OutputDirectory);		}
 
-		private void checkOutputFile(string filename, string contains)
+		private void CheckOutputFile(string filename, string contains)
 		{
-			var fullPath = OUTPUT_DIRECTORY + "\\" + filename;
+			var fullPath = OutputDirectory + "\\" + filename;
 			var text = File.ReadAllText(fullPath);
 			Assert.IsTrue(text.Contains(contains), string.Format("Didn't find '{0}' in :\r\n{1}", contains, text));
 		}
 
-		private void outputDirectoryShouldBeEmpty()
+		private void OutputDirectoryShouldBeEmpty()
 		{
-			Assert.AreEqual(0, Directory.EnumerateFiles(OUTPUT_DIRECTORY).Count(), "Output directory should be empty.");
+			Assert.AreEqual(0, Directory.EnumerateFiles(OutputDirectory).Count(), "Output directory should be empty.");
 		}
 
 		[TestInitialize]
-		public void createInputDirectory()
+		public void CreateInputDirectory()
 		{
-			if (!Directory.Exists(INPUT_DIRECTORY))
+			if (!Directory.Exists(InputDirectory))
 			{
-				Directory.CreateDirectory(INPUT_DIRECTORY);
+				Directory.CreateDirectory(InputDirectory);
 			}
-			if (!Directory.Exists(OUTPUT_DIRECTORY))
+			if (!Directory.Exists(OutputDirectory))
 			{
-				Directory.CreateDirectory(OUTPUT_DIRECTORY);
+				Directory.CreateDirectory(OutputDirectory);
 			}
 			
 		}
 
 		[TestCleanup]
-		public void cleanUpResultsForRenderingInputFolder()
+		public void CleanUpResultsForRenderingInputFolder()
 		{
-			if (Directory.Exists(OUTPUT_DIRECTORY))
+			if (Directory.Exists(OutputDirectory))
 			{
-				Directory.Delete(OUTPUT_DIRECTORY, true);
+				Directory.Delete(OutputDirectory, true);
 			}
-			if (Directory.Exists(INPUT_DIRECTORY))
+			if (Directory.Exists(InputDirectory))
 			{
-				Directory.Delete(INPUT_DIRECTORY, true);
+				Directory.Delete(InputDirectory, true);
 			}
 		}
 	}

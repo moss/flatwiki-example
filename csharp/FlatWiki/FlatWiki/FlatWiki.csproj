@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
+    <Compile Include="FlatWiki.cs" />
     <Compile Include="OutputDirectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WikiPage.cs" />

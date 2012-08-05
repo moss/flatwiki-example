@@ -7,40 +7,40 @@ namespace FlatWiki.Tests
 	public class WikiPageTest
 	{
 		[TestMethod]
-		public void outputFilenameIsPageNamePlusHtmlExtension()
+		public void OutputFilenameIsPageNamePlusHtmlExtension()
 		{
 			WikiPage page = new WikiPage("SomePage", "content ignored", 0);
-			Assert.AreEqual(page.getOutputFilename(),("SomePage.html"));
+			Assert.AreEqual(page.GetOutputFilename(),("SomePage.html"));
 		}
 
 		[TestMethod]
-		public void htmlContentIncludesTitleAndText()
+		public void HtmlContentIncludesTitleAndText()
 		{
 			WikiPage page = new WikiPage("ThePageName", "Some random text.", 0);
-		AssertContainsString(page.asHtml(),"<h1>ThePageName</h1>");
-			AssertContainsString(page.asHtml(),"Some random text.");
+		AssertContainsString(page.AsHtml(),"<h1>ThePageName</h1>");
+			AssertContainsString(page.AsHtml(),"Some random text.");
 		}
 
 		[TestMethod]
-		public void transformsWordsSmashedTogetherIntoWikiLinks()
+		public void TransformsWordsSmashedTogetherIntoWikiLinks()
 		{
 			WikiPage page = new WikiPage("PageName", "Link to AnotherPage.", 0);
-			AssertContainsString(page.asHtml(),"Link to <a href=\"AnotherPage.html\">AnotherPage</a>.");
+			AssertContainsString(page.AsHtml(),"Link to <a href=\"AnotherPage.html\">AnotherPage</a>.");
 		}
 
 		[TestMethod]
-		public void wikiLinks_Cannot_AppearInTheMiddleOfOtherWords()
+		public void WikiLinksCannotAppearInTheMiddleOfOtherWords()
 		{
 			WikiPage page = new WikiPage("PageName", "This should notBeLinked.", 0);
-			AssertContainsString(page.asHtml(),"should notBeLinked.");
-			AssertContainsString( false, page.asHtml(), "<a");
+			AssertContainsString(page.AsHtml(),"should notBeLinked.");
+			AssertContainsString( false, page.AsHtml(), "<a");
 		}
 
 		[TestMethod]
-		public void wikiLinks_Can_AppearAtTheStartOfTheContent()
+		public void WikiLinksCanAppearAtTheStartOfTheContent()
 		{
 			WikiPage page = new WikiPage("PageName", "ThisLink should be a link.", 0);
-			AssertContainsString(page.asHtml(), "<a href=\"ThisLink.html\">ThisLink</a>");
+			AssertContainsString(page.AsHtml(), "<a href=\"ThisLink.html\">ThisLink</a>");
 		}
 
 		public void AssertContainsString(string text, string contains)
@@ -54,10 +54,10 @@ namespace FlatWiki.Tests
 		}
 
 		[TestMethod]
-		public void showsTheLastUpdatedTime()
+		public void ShowsTheLastUpdatedTime()
 		{
 			WikiPage page = new WikiPage("PageName", "Some text.", new DateTime(2010, 4, 25, 13, 17,0).Ticks);
-			AssertContainsString(page.asHtml(),"<i>Last Updated: 4/25/2010 1:17 PM</i>");
+			AssertContainsString(page.AsHtml(),"<i>Last Updated: 4/25/2010 1:17 PM</i>");
 		}
 
 	}

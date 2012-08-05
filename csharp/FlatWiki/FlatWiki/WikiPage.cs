@@ -23,21 +23,21 @@ namespace FlatWiki
 			this.updatedTime = updatedTime;
 		}
 
-		public string getOutputFilename()
+		public string GetOutputFilename()
 		{
 			return name + ".html";
 		}
 
-		public string asHtml()
+		public string AsHtml()
 		{
 			return String.Format(
 				@"<h1>{0}</h1>
 <div>{1}</div>
 <i>Last Updated: {2}</i>",
-				name, wikifySource(), formatUpdatedTime());
+				name, WikifySource(), FormatUpdatedTime());
 		}
 
-		private string wikifySource()
+		private string WikifySource()
 		{
 			// TODO extract a method object. WikiText? WikiScanner?
 			
@@ -45,7 +45,7 @@ namespace FlatWiki
 			return Regex.Replace(source, WIKI_WORD_PATTERN, m => string.Format(@"<a href=""{0}.html"">{0}</a>", m.Value));
 		}
 
-		private string formatUpdatedTime()
+		private string FormatUpdatedTime()
 		{
 			return new DateTime(updatedTime).ToString("M/d/yyyy h:m tt");
 		}
