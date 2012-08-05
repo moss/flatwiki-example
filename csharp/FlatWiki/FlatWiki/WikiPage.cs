@@ -40,22 +40,14 @@ namespace FlatWiki
 		private string wikifySource()
 		{
 			// TODO extract a method object. WikiText? WikiScanner?
-			var result = new StringBuilder();
-			var matches = Regex.Matches(source, WIKI_WORD_PATTERN);
-//			foreach (var match in matches.Cast<Match>())
-//			{
-//				
-//				string pageName = match.Result().group();
-//				string link = String.format("<a href=\"%s.html\">%s</a>", pageName, pageName);
-//				matcher.appendReplacement(result, link);
-//			}
-//			matcher.appendTail(result);
-			return result.ToString();
+			
+
+			return Regex.Replace(source, WIKI_WORD_PATTERN, m => string.Format(@"<a href=""{0}.html"">{0}</a>", m.Value));
 		}
 
 		private string formatUpdatedTime()
 		{
-			return new DateTime(updatedTime).ToString("M/d/yyyy h:m a");
+			return new DateTime(updatedTime).ToString("M/d/yyyy h:m tt");
 		}
 	}
 }
