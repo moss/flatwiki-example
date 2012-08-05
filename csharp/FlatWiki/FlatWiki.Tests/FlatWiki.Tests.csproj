@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="EndToEnd\EndToEndTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="WikiPageTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlatWiki\FlatWiki.csproj">

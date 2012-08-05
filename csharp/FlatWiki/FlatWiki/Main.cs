@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace FlatWiki
 {
@@ -30,7 +31,7 @@ public class Main {
 
     // TODO extract a delegate for inputDirectory business?
     private IEnumerable<string> listInputFiles() {
-        return Directory.EnumerateFiles(inputDirectory, "*.wiki");
+			return Directory.EnumerateFiles(inputDirectory, "*.wiki").Select(f => new FileInfo(f).Name);
     }
 
     private long modifiedTime(string filename) {

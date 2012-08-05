@@ -79,7 +79,7 @@ namespace FlatWiki.Tests.EndToEnd
 		private void givenInputFile(string filename, string content)
 		{
 			var path = GetInputFile(filename);
-			;
+			
 
 			File.WriteAllText(path, content);
 		}
@@ -109,12 +109,13 @@ namespace FlatWiki.Tests.EndToEnd
 		private void checkOutputFile(string filename, string contains)
 		{
 			var fullPath = OUTPUT_DIRECTORY + "\\" + filename;
-			Assert.IsTrue(File.ReadAllText(fullPath).Contains(contains));
+			var text = File.ReadAllText(fullPath);
+			Assert.IsTrue(text.Contains(contains), string.Format("Didn't find '{0}' in :\r\n{1}", contains, text));
 		}
 
 		private void outputDirectoryShouldBeEmpty()
 		{
-			Assert.AreEqual(2, Directory.EnumerateFiles(OUTPUT_DIRECTORY).Count(), "Output directory should be empty.");
+			Assert.AreEqual(0, Directory.EnumerateFiles(OUTPUT_DIRECTORY).Count(), "Output directory should be empty.");
 		}
 
 		[TestInitialize]
