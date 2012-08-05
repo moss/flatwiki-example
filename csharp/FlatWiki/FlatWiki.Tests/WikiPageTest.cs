@@ -1,8 +1,7 @@
 using System;
-using FlatWiki;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MyNamespace
+namespace FlatWiki.Tests
 {
 	[TestClass]
 	public class WikiPageTest
