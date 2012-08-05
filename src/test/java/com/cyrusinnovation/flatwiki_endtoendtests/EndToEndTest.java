@@ -48,8 +48,8 @@ public class EndToEndTest {
         ));
     }
 
-    @Ignore
-    @Test public void shouldShowARecentChangesPage() throws IOException {
+//    @Test -- Future requirement.
+    public void shouldShowARecentChangesPage() throws IOException {
         givenFileCreatedOn("NewestPage.wiki", 2012, 5, 16);
         givenFileCreatedOn("OldestPage.wiki", 1996, 1, 12);
         givenFileCreatedOn("MiddlePage.wiki", 2008, 7, 25);
@@ -60,22 +60,22 @@ public class EndToEndTest {
         ));
     }
 
-    @Ignore
-    @Test public void shouldTurnStarredWordsIntoBoldface() throws IOException {
+//    @Test -- Future requirement.
+    public void shouldTurnStarredWordsIntoBoldface() throws IOException {
         givenInputFile("StoryFiveExample.wiki", "Some *boldface* text");
         whenITranslateTheInputFolderToHtml();
         checkOutputFile("StoryFiveExample.html", containsString("<b>boldface</b>"));
     }
 
-    @Ignore
-    @Test public void shouldTurnDoubleLineBreaksIntoParagraphBreaks() throws IOException {
+//    @Test -- Future requirement.
+    public void shouldTurnDoubleLineBreaksIntoParagraphBreaks() throws IOException {
         givenInputFile("StorySixExample.wiki", "Paragraph One\n\nParagraph Two");
         whenITranslateTheInputFolderToHtml();
         checkOutputFile("StorySixExample.html", containsString("Paragraph One<p>Paragraph Two"));
     }
 
-    @Ignore
-    @Test public void linksToNonExistentPagesShouldNotFormatAsLinks() throws IOException {
+//    @Test -- Future requirement.
+    public void linksToNonExistentPagesShouldNotFormatAsLinks() throws IOException {
         givenInputFile("StorySevenExample.wiki", "Link to NonexistentPage");
         whenITranslateTheInputFolderToHtml();
         checkOutputFile("StorySevenExample.html", not(containsString("<a")));
