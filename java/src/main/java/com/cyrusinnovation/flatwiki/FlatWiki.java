@@ -5,17 +5,17 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
 
 import java.io.*;
 
-public class Main {
+public class FlatWiki {
     private final File inputDirectory;
     private final OutputDirectory outputDirectory;
 
     public static void main(String... args) throws IOException {
         File inputDirectory = new File(args[0]);
         OutputDirectory outputDirectory = new OutputDirectory(args[1]);
-        new Main(inputDirectory, outputDirectory).run();
+        new FlatWiki(inputDirectory, outputDirectory).run();
     }
 
-    public Main(File inputDirectory, OutputDirectory outputDirectory) {
+    public FlatWiki(File inputDirectory, OutputDirectory outputDirectory) {
         this.inputDirectory = inputDirectory;
         this.outputDirectory = outputDirectory;
     }
