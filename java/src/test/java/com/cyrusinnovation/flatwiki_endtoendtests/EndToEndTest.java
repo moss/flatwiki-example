@@ -1,6 +1,6 @@
 package com.cyrusinnovation.flatwiki_endtoendtests;
 
-import com.cyrusinnovation.flatwiki.Main;
+import com.cyrusinnovation.flatwiki.FlatWiki;
 import org.apache.commons.io.FileUtils;
 import org.hamcrest.Matcher;
 import org.junit.*;
@@ -100,7 +100,7 @@ public class EndToEndTest {
     }
 
     private void whenITranslateTheInputFolderToHtml() throws IOException {
-        Main.main(INPUT_DIRECTORY.getPath(), OUTPUT_DIRECTORY.getPath());
+        FlatWiki.main(INPUT_DIRECTORY.getPath(), OUTPUT_DIRECTORY.getPath());
     }
 
     private void checkOutputFile(String filename, Matcher<String> matcher) throws IOException {
