@@ -1,24 +1,24 @@
-package com.cyrusinnovation.flatwiki;
+require 'test/unit'
+require 'output_directory'
 
-import org.junit.*;
-import org.junit.rules.*;
+class OutputDirectoryTest < Test::Unit::TestCase
+  def setup
+    @folder = Pathname.new 'output-directory-test-output'
+    @folder.mkdir unless @folder.exist?
+    @output_directory = OutputDirectory.new(@folder)
+  end
 
-import java.io.*;
+  def teardown
+    @folder.rmtree if @folder.exist?
+  end
 
-import static org.apache.commons.io.FileUtils.readFileToString;
-import static org.junit.Assert.*;
-
-public class OutputDirectoryTest {
-    @Rule public TemporaryFolder folder = new TemporaryFolder();
-    private OutputDirectory outputDirectory;
-
-    @Before public void setUp() {
-        outputDirectory = new OutputDirectory(folder.getRoot());
-    }
-
-    @Test public void writesFilesToFolder() throws IOException {
-        outputDirectory.writeFile("somefile.txt", "some text");
-        String content = readFileToString(new File(folder.getRoot(), "somefile.txt"));
-        assertEquals("some text", content);
-    }
-}
+  def test_writes_files_to_folder
+    @output_directory.write_file("somefile.txt", "some text");
+    content = read_file 'somefile.txt'
+    assert_equal("some text", content);
+  end
+  
+  def read_file name
+    File.open(@folder + name, 'r') {|f| return f.read }
+  end
+end

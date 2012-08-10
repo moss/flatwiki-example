@@ -1,44 +1,36 @@
-package com.cyrusinnovation.flatwiki;
+require 'test/unit'
+require 'wiki_page'
 
-import org.junit.*;
+class WikiPageTest < Test::Unit::TestCase
+    def test_output_filename_is_page_name_plus_html_extension
+      page = WikiPage.new("SomePage", "content ignored", Time.new)
+      assert_equal "SomePage.html", page.output_filename
+    end
 
-import static com.cyrusinnovation.flatwiki.TimeUtils.timeInMillis;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.junit.internal.matchers.StringContains.*;
+    def test_html_content_includes_title_and_text
+      page = WikiPage.new("ThePageName", "Some random text.", Time.new)
+      assert_match "<h1>ThePageName</h1>", page.as_html
+      assert_match "Some random text.", page.as_html
+    end
 
-public class WikiPageTest {
-    @Test public void outputFilenameIsPageNamePlusHtmlExtension() {
-        WikiPage page = new WikiPage("SomePage", "content ignored", 0);
-        assertThat(page.getOutputFilename(), is("SomePage.html"));
-    }
+    def test_transforms_WordsSmashedTogether_into_wiki_links
+      page = WikiPage.new("PageName", "Link to AnotherPage.", Time.new)
+      assert_match "Link to <a href=\"AnotherPage.html\">AnotherPage</a>.", page.as_html
+    end
 
-    @Test public void htmlContentIncludesTitleAndText() {
-        WikiPage page = new WikiPage("ThePageName", "Some random text.", 0);
-        assertThat(page.asHtml(), containsString("<h1>ThePageName</h1>"));
-        assertThat(page.asHtml(), containsString("Some random text."));
-    }
+    def test_wiki_links_CANNOT_appear_in_the_middle_of_other_words
+      page = WikiPage.new("PageName", "This should notBeLinked.", Time.new)
+      assert_match "should notBeLinked.", page.as_html
+      assert_no_match /<a/, page.as_html
+    end
 
-    @Test public void transformsWordsSmashedTogetherIntoWikiLinks() {
-        WikiPage page = new WikiPage("PageName", "Link to AnotherPage.", 0);
-        assertThat(page.asHtml(), containsString(
-                "Link to <a href=\"AnotherPage.html\">AnotherPage</a>."
-        ));
-    }
+    def test_wiki_links_CAN_appear_at_the_start_of_the_content
+      page = WikiPage.new("PageName", "ThisLink should be a link.", Time.new)
+      assert_match "<a href=\"ThisLink.html\">ThisLink</a>", page.as_html
+    end
 
-    @Test public void wikiLinks_Cannot_AppearInTheMiddleOfOtherWords() {
-        WikiPage page = new WikiPage("PageName", "This should notBeLinked.", 0);
-        assertThat(page.asHtml(), containsString("should notBeLinked."));
-        assertThat(page.asHtml(), not(containsString("<a")));
-    }
-
-    @Test public void wikiLinks_Can_AppearAtTheStartOfTheContent() {
-        WikiPage page = new WikiPage("PageName", "ThisLink should be a link.", 0);
-        assertThat(page.asHtml(), containsString("<a href=\"ThisLink.html\">ThisLink</a>"));
-    }
-
-    @Test public void showsTheLastUpdatedTime() {
-        WikiPage page = new WikiPage("PageName", "Some text.", timeInMillis(2010, 4, 25, 13, 17));
-        assertThat(page.asHtml(), containsString("<i>Last Updated: 4/25/2010 1:17 PM</i>"));
-    }
-}
+    def test_shows_the_last_updated_time
+      page = WikiPage.new("PageName", "Some text.", Time.utc(2010, 4, 25, 13, 17))
+      assert_match "<i>Last Updated: 4/25/2010 1:17 PM</i>", page.as_html
+    end
+end

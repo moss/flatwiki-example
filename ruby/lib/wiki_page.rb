@@ -24,17 +24,7 @@ HERE
 
     def wikify_source
       #TODO extract a method object. WikiText? WikiScanner?
-#        // TODO extract a method object. WikiText? WikiScanner?
-#        StringBuffer result = new StringBuffer();
-#        Matcher matcher = WIKI_WORD_PATTERN.matcher(source);
-#        while (matcher.find()) {
-#            String pageName = matcher.group();
-#            String link = String.format("<a href=\"%s.html\">%s</a>", pageName, pageName);
-#            matcher.appendReplacement(result, link);
-#        }
-#        matcher.appendTail(result);
-#        return result.toString();
-      @source
+      @source.gsub(WIKI_WORD_PATTERN) {|match| %[<a href="#{match}.html">#{match}</a>] }
     end
 
     def format_updated_time

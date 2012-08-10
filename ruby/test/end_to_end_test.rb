@@ -23,7 +23,7 @@ class EndToEndTests < Test::Unit::TestCase
     given_input_file "StoryTwoExampleTarget.wiki", "Here's the target of that link."
     when_i_translate_the_folder_to_html
     check_output_file_contains "StoryTwoExample.html",
-      '<a href="StoryOneExampleTarget.html">StoryOneExampleTarget</a>'
+      '<a href="StoryTwoExampleTarget.html">StoryTwoExampleTarget</a>'
   end
 
   def test_shows_updated_date_at_the_end_of_each_page
