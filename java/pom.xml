@@ -36,4 +36,11 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>internal-repository</id>
+            <name>Internal Maven Repository</name>
+            <url>${project.baseUri}/maven-repository/</url>
+        </repository>
+    </repositories>
 </project>
